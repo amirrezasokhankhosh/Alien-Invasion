@@ -4,6 +4,7 @@ from Settings import Settings
 import Game_functions
 from Ship import Ship
 from pygame.sprite import Group
+from Game_stats import Game_stats
 
 
 def run_game():
@@ -23,16 +24,20 @@ def run_game():
     bullets = Group()
     aliens = Group()
 
-    Game_functions.create_fleet(ai_settings , screen , ship, aliens)
+    # Create instance to store game statics
+    stats = Game_stats(ai_settings)
+
+    Game_functions.create_fleet(ai_settings, screen, ship, aliens)
     # Start the main loop for the game.
     while True:
         # Watch for keyboard and mouse events.
         Game_functions.check_events(ai_settings, screen, ship, bullets)
-        ship.update()
-        Game_functions.update_bullets(bullets ,aliens)
-        Game_functions.update_aliens(aliens , ai_settings)
-        Game_functions.upgrade_screen(
-            ai_settings, screen, ship, aliens, bullets)
+        if stats.game_active == True:
+            ship.update()
+            Game_functions.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            Game_functions.update_aliens(ai_settings, stats, screen, ship, aliens  , bullets)
+        
+        Game_functions.upgrade_screen(ai_settings, screen, ship, aliens, bullets)
 
 
 run_game()
