@@ -1,8 +1,8 @@
 import sys
 import pygame
 from Settings import Settings
-from Ship import Ship
 import Game_functions
+from Ship import Ship
 from pygame.sprite import Group
 
 
@@ -19,16 +19,19 @@ def run_game():
     # Draw a ship
     ship = Ship(screen, ai_settings)
 
-    # Make a group to store bullets in.
+    # Make 2 group to store bullets and aliens in.
     bullets = Group()
+    aliens = Group()
 
+    Game_functions.create_fleet(ai_settings , screen , ship, aliens)
     # Start the main loop for the game.
     while True:
         # Watch for keyboard and mouse events.
         Game_functions.check_events(ai_settings, screen, ship, bullets)
         ship.update()
         Game_functions.update_bullets(bullets)
-        Game_functions.upgrade_screen(ai_settings, screen, ship , bullets)
+        Game_functions.upgrade_screen(
+            ai_settings, screen, ship, aliens, bullets)
 
 
 run_game()
