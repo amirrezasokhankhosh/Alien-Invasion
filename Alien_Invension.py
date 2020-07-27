@@ -6,6 +6,7 @@ from Ship import Ship
 from pygame.sprite import Group
 from Game_stats import Game_stats
 from Button import Button
+from Scoreboard import Scoreboard
 
 def run_game():
     # Initialize game and create a screen object.
@@ -28,17 +29,21 @@ def run_game():
     # Make the Play button.
     play_button = Button(ai_settings, screen, "Play")
 
+    #craate scoreboard 
+    scoreboard = Scoreboard(ai_settings , screen , stats)
+
+
     Game_functions.create_fleet(ai_settings, screen, ship, aliens)
-    # Start the main loop for the game.
+    # Start the main loop for the game. 
     while True:
         # Watch for keyboard and mouse events.
-        Game_functions.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
+        Game_functions.check_events(ai_settings, screen, stats, scoreboard, play_button, ship, aliens , bullets)
         if stats.game_active == True:
             ship.update()
-            Game_functions.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            Game_functions.update_bullets(ai_settings, screen, stats, scoreboard, ship, aliens, bullets )
             Game_functions.update_aliens(ai_settings, stats, screen, ship, aliens  , bullets)
 
-        Game_functions.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
+        Game_functions.update_screen(ai_settings, screen, stats, scoreboard,ship, aliens, bullets, play_button)
 
 
-run_game()
+run_game()  

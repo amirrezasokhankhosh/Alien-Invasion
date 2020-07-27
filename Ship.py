@@ -1,6 +1,5 @@
 import pygame
 
-
 class Ship():
     def __init__(self, screen, ai_settings):
         super().__init__()
