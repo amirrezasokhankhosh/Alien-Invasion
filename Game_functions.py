@@ -112,12 +112,12 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     aliens.add(alien)
 
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, stats, screen, scoreboard, ship, aliens, bullets):
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
-    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, screen, scoreboard, ship, aliens, bullets)
+    check_aliens_bottom(ai_settings, stats, screen, scoreboard, ship, aliens, bullets)
 
 
 def check_fleet_edges(ai_settings, aliens):
@@ -152,9 +152,10 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, scoreboard,ship, a
         
 
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, stats, screen, scoreboard, ship, aliens, bullets):
     if stats.ships_left > 0:
         stats.ships_left -= 1
+        scoreboard.prep_ships()
         aliens.empty()
         bullets.empty()
         create_fleet(ai_settings, screen, ship, aliens)
@@ -164,11 +165,11 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
-def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(ai_settings, stats, screen, scoreboard, ship, aliens, bullets):
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            ship_hit(ai_settings, stats, screen, scoreboard, ship, aliens, bullets)
             break
 
 def check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship, aliens, bullets, mouse_x, mouse_y):
@@ -184,6 +185,7 @@ def check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship,
         scoreboard.prep_score()
         scoreboard.prep_high_score()
         scoreboard.prep_level()
+        scoreboard.prep_ships()
 
         aliens.empty()
         bullets.empty()

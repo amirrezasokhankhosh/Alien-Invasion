@@ -1,1 +1,1 @@
-update_screen
+ai_settings
