@@ -29,7 +29,8 @@ def run_game():
         # Watch for keyboard and mouse events.
         Game_functions.check_events(ai_settings, screen, ship, bullets)
         ship.update()
-        Game_functions.update_bullets(bullets)
+        Game_functions.update_bullets(bullets ,aliens)
+        Game_functions.update_aliens(aliens , ai_settings)
         Game_functions.upgrade_screen(
             ai_settings, screen, ship, aliens, bullets)
 
