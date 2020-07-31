@@ -1,2 +1,2 @@
 # Alien-Invasion
-A game using python.
+just a simple game using python with a strong object oriented code.
